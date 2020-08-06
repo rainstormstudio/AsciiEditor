@@ -24,7 +24,7 @@ class Graphics {
     std::vector<std::vector<std::shared_ptr<Texture>>> textDisplay;
 
 public:
-    Graphics(std::string title, Uint32 fullscreenFlag, 
+    Graphics(std::string title, Uint32 fullscreenFlag, std::string fontPath,
              unsigned int screenWidth, unsigned int screenHeight,
              unsigned int numRows, unsigned int numCols);
     ~Graphics();
@@ -32,7 +32,7 @@ public:
     void setCh(char ch, unsigned int x, unsigned int y);
     void setForeColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a, int x, int y);
     void setBackColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a, int x, int y);
-    void importTxt(std::string filename);
+    void importTxt(std::string filename, bool transparent);
 
     void clear();
     void render();

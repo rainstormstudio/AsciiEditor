@@ -1,6 +1,6 @@
 #include "graphics.hpp"
 
-Graphics::Graphics(std::string title, Uint32 fullscreenFlag,
+Graphics::Graphics(std::string title, Uint32 fullscreenFlag, std::string fontPath,
                    unsigned int screenWidth, unsigned int screenHeight, 
                    unsigned int numRows, unsigned int numCols) 
     : title{title}, fullscreen{fullscreenFlag}, 
@@ -24,7 +24,7 @@ Graphics::Graphics(std::string title, Uint32 fullscreenFlag,
             if (TTF_Init() == -1) {
                 std::cerr << "TTF initialization failed: " << TTF_GetError() << std::endl;
             } else {
-                font = TTF_OpenFont("assets/fonts/Monaco.ttf", 24);
+                font = TTF_OpenFont(fontPath.c_str(), 24);
                 if (font == nullptr) {
                     std::cerr << "Failed to load font: " << TTF_GetError() << std::endl;
                 }
@@ -76,7 +76,7 @@ void Graphics::setBackColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a, int x, int y) {
     }
 }
 
-void Graphics::importTxt(std::string filename) {
+void Graphics::importTxt(std::string filename, bool transparent) {
     std::string line;
     std::ifstream infile {filename};
     if (infile.is_open()) {
@@ -85,10 +85,12 @@ void Graphics::importTxt(std::string filename) {
             int len = line.length();
             if (row < numRows) {
                 for (int i = 0; i < len && i < numCols; ++i) {
-                    preBuffer[row][i] = {
-                        line[i],
-                        255, 255, 255, 255,
-                        0, 0, 0, 255};
+                    if (!transparent || (transparent && line[i] != ' ')) {
+                        preBuffer[row][i] = {
+                            line[i],
+                            255, 255, 255, 255,
+                            0, 0, 0, 255};
+                    }
                 }
                 ++row;
             }
