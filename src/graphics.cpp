@@ -24,7 +24,7 @@ Graphics::Graphics(std::string title, Uint32 fullscreenFlag,
             if (TTF_Init() == -1) {
                 std::cerr << "TTF initialization failed: " << TTF_GetError() << std::endl;
             } else {
-                font = TTF_OpenFont("assets/fonts/courier.ttf", 12);
+                font = TTF_OpenFont("assets/fonts/Monaco.ttf", 12);
                 if (font == nullptr) {
                     std::cerr << "Failed to load font: " << TTF_GetError() << std::endl;
                 }
