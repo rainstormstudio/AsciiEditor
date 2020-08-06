@@ -11,13 +11,14 @@ class Texture {
     SDL_Texture* texture;
     SDL_Rect srcRect;
     SDL_Rect destRect;
+    SDL_Color textColor;
 public:
     Texture(unsigned int width, unsigned int height);
     ~Texture();
 
     void setPosition(int x, int y);
 
-    bool loadFromText(SDL_Renderer* renderer, std::string text, TTF_Font* font, SDL_Color textColor);
+    bool loadFromText(SDL_Renderer* renderer, std::string text, TTF_Font* font);
 
     void free();
     void setColor(Uint8 red, Uint8 green, Uint8 blue, Uint8 alpha);

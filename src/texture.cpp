@@ -12,6 +12,8 @@ Texture::Texture(unsigned int width, unsigned int height) {
     destRect.y = 0;
     destRect.w = width;
     destRect.h = height;
+
+    textColor = {255, 255, 255, 255};
 }
 
 Texture::~Texture() {
@@ -23,9 +25,8 @@ void Texture::setPosition(int x, int y) {
     destRect.y = y;
 }
 
-bool Texture::loadFromText(SDL_Renderer* renderer, std::string text, TTF_Font* font, SDL_Color textColor) {
+bool Texture::loadFromText(SDL_Renderer* renderer, std::string text, TTF_Font* font) {
     free();
-
     SDL_Surface* surface = TTF_RenderText_Solid(font, text.c_str(), textColor);
     if (surface == nullptr) {
         std::cerr << "Error rendering SDL surface: " << TTF_GetError() << std::endl;
@@ -55,6 +56,7 @@ void Texture::free() {
 void Texture::setColor(Uint8 red, Uint8 green, Uint8 blue, Uint8 alpha) {
     SDL_SetTextureColorMod(texture, red, green, blue);
     SDL_SetTextureAlphaMod(texture, alpha);
+    textColor = {red, green, blue, alpha};
 }
 
 void Texture::setBlendMode(SDL_BlendMode blending) {
