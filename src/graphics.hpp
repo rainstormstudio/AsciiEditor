@@ -19,6 +19,7 @@ class Graphics {
     unsigned int screenHeight;
     unsigned int numRows;
     unsigned int numCols;
+    std::vector<std::vector<Buffer>> preBuffer;
     std::vector<std::vector<std::shared_ptr<Texture>>> textDisplay;
 
 public:

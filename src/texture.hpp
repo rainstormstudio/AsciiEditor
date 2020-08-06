@@ -7,6 +7,14 @@
 #include <string>
 #include <iostream>
 
+struct Buffer {
+    char ch;
+    Uint8 r;
+    Uint8 g;
+    Uint8 b;
+    Uint8 a;
+};
+
 class Texture {
     SDL_Texture* texture;
     SDL_Rect srcRect;
