@@ -33,6 +33,8 @@ public:
     void setForeColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a, int x, int y);
     void setBackColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a, int x, int y);
     void importTxt(std::string filename, bool transparent);
+    void write(std::string content, int x, int y);
+    void writeln(std::string content, int x, int y, int width);
 
     void clear();
     void render();

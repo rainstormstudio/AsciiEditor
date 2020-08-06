@@ -101,6 +101,32 @@ void Graphics::importTxt(std::string filename, bool transparent) {
     }
 }
 
+void Graphics::write(std::string content, int x, int y) {
+    if (x >= numCols || y >= numRows) {
+        return;
+    }
+    int len = content.length();
+    for (int i = 0; i < len && x + i < numCols; ++i) {
+        preBuffer[y][x + i] = {content[i], 255, 255, 255, 255, 0, 0, 0, 255};
+    }
+}
+
+void Graphics::writeln(std::string content, int x, int y, int width) {
+    if (x >= numCols || y >= numRows) {
+        return;
+    }
+    int len = content.length();
+    int j = 0;
+    for (int i = 0; i < len; ++i) {
+        preBuffer[y][x + j] = {content[i], 255, 255, 255, 255, 0, 0, 0, 255};
+        ++j;
+        if (j == numCols || j == width) {
+            ++y;
+            j = 0;
+        }
+    }
+}
+
 Graphics::~Graphics() {
     TTF_CloseFont(font);
     SDL_DestroyWindow(window);
