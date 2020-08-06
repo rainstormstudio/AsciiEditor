@@ -36,7 +36,7 @@ Graphics::Graphics(std::string title, Uint32 fullscreenFlag,
     for (int i = 0; i < numRows; ++i) {
         preBuffer[i] = std::vector<Buffer>(numCols);
         for (int j = 0; j < numCols; ++j) {
-            preBuffer[i][j] = {' ', 255, 255, 255, 255};
+            preBuffer[i][j] = {' ', 255, 255, 255, 255, 0, 0, 0, 255};
         }
     }
 
@@ -45,8 +45,8 @@ Graphics::Graphics(std::string title, Uint32 fullscreenFlag,
         textDisplay[i] = std::vector<std::shared_ptr<Texture>>(numCols);
         for (int j = 0; j < numCols; ++j) {
             textDisplay[i][j] = std::make_shared<Texture>(screenWidth/numCols, screenHeight/numRows);
-            SDL_Color color = {preBuffer[i][j].r, preBuffer[i][j].g, preBuffer[i][j].b, preBuffer[i][j].a};
             textDisplay[i][j]->loadFromText(renderer, std::string(1, preBuffer[i][j].ch), font);
+            textDisplay[i][j]->setBlendMode(SDL_BLENDMODE_BLEND);
             textDisplay[i][j]->setPosition(j*(screenWidth/numCols), i*(screenHeight/numRows));
         }
     }
@@ -58,12 +58,21 @@ void Graphics::setCh(char ch, unsigned int x, unsigned int y) {
     }
 }
 
-void Graphics::setColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a, int x, int y) {
+void Graphics::setForeColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a, int x, int y) {
     if (x < numCols && y < numRows) {
         preBuffer[y][x].r = r;
         preBuffer[y][x].g = g;
         preBuffer[y][x].b = b;
         preBuffer[y][x].a = a;
+    }
+}
+
+void Graphics::setBackColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a, int x, int y) {
+    if (x < numCols && y < numRows) {
+        preBuffer[y][x].br = r;
+        preBuffer[y][x].bg = g;
+        preBuffer[y][x].bb = b;
+        preBuffer[y][x].ba = a;
     }
 }
 
@@ -77,7 +86,7 @@ Graphics::~Graphics() {
 void Graphics::clear() {
     for (int i = 0; i < numRows; ++i) {
         for (int j = 0; j < numCols; ++j) {
-            preBuffer[i][j] = {' ', 255, 255, 255, 255};
+            preBuffer[i][j] = {' ', 255, 255, 255, 255, 0, 0, 0, 255};
         }
     }
     SDL_RenderClear(renderer);
@@ -86,8 +95,10 @@ void Graphics::clear() {
 void Graphics::render() {
     for (int i = 0; i < numRows; ++i) {
         for (int j = 0; j < numCols; ++j) {
+            textDisplay[i][j]->setBackColor(preBuffer[i][j].br, preBuffer[i][j].bg, preBuffer[i][j].bb, preBuffer[i][j].ba);
             textDisplay[i][j]->loadFromText(renderer, std::string(1, preBuffer[i][j].ch), font);
-            textDisplay[i][j]->setColor(preBuffer[i][j].r, preBuffer[i][j].g, preBuffer[i][j].b, preBuffer[i][j].a);
+            textDisplay[i][j]->setBlendMode(SDL_BLENDMODE_BLEND);
+            textDisplay[i][j]->setForeColor(preBuffer[i][j].r, preBuffer[i][j].g, preBuffer[i][j].b, preBuffer[i][j].a);
             textDisplay[i][j]->render(renderer);
         }
     }

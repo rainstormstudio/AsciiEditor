@@ -13,6 +13,10 @@ struct Buffer {
     Uint8 g;
     Uint8 b;
     Uint8 a;
+    Uint8 br;
+    Uint8 bg;
+    Uint8 bb;
+    Uint8 ba;
 };
 
 class Texture {
@@ -20,6 +24,7 @@ class Texture {
     SDL_Rect srcRect;
     SDL_Rect destRect;
     SDL_Color textColor;
+    SDL_Color backColor;
 public:
     Texture(unsigned int width, unsigned int height);
     ~Texture();
@@ -29,7 +34,8 @@ public:
     bool loadFromText(SDL_Renderer* renderer, std::string text, TTF_Font* font);
 
     void free();
-    void setColor(Uint8 red, Uint8 green, Uint8 blue, Uint8 alpha);
+    void setForeColor(Uint8 red, Uint8 green, Uint8 blue, Uint8 alpha);
+    void setBackColor(Uint8 red, Uint8 green, Uint8 blue, Uint8 alpha);
     void setBlendMode(SDL_BlendMode blending);
     void render(SDL_Renderer* renderer);
 };

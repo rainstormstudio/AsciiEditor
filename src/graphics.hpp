@@ -29,7 +29,8 @@ public:
     ~Graphics();
 
     void setCh(char ch, unsigned int x, unsigned int y);
-    void setColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a, int x, int y);
+    void setForeColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a, int x, int y);
+    void setBackColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a, int x, int y);
 
     void clear();
     void render();
