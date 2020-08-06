@@ -55,8 +55,6 @@ void Texture::free() {
 }
 
 void Texture::setForeColor(Uint8 red, Uint8 green, Uint8 blue, Uint8 alpha) {
-    SDL_SetTextureColorMod(texture, red, green, blue);
-    SDL_SetTextureAlphaMod(texture, alpha);
     textColor = {red, green, blue, alpha};
 }
 
@@ -66,6 +64,7 @@ void Texture::setBackColor(Uint8 red, Uint8 green, Uint8 blue, Uint8 alpha) {
 
 void Texture::setBlendMode(SDL_BlendMode blending) {
     SDL_SetTextureBlendMode(texture, blending);
+    SDL_SetTextureAlphaMod(texture, textColor.a);
 }
 
 void Texture::render(SDL_Renderer* renderer) {

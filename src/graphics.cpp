@@ -147,9 +147,9 @@ void Graphics::render() {
     for (int i = 0; i < numRows; ++i) {
         for (int j = 0; j < numCols; ++j) {
             textDisplay[i][j]->setBackColor(preBuffer[i][j].br, preBuffer[i][j].bg, preBuffer[i][j].bb, preBuffer[i][j].ba);
+            textDisplay[i][j]->setForeColor(preBuffer[i][j].r, preBuffer[i][j].g, preBuffer[i][j].b, preBuffer[i][j].a);
             textDisplay[i][j]->loadFromText(renderer, std::string(1, preBuffer[i][j].ch), font);
             textDisplay[i][j]->setBlendMode(SDL_BLENDMODE_BLEND);
-            textDisplay[i][j]->setForeColor(preBuffer[i][j].r, preBuffer[i][j].g, preBuffer[i][j].b, preBuffer[i][j].a);
             textDisplay[i][j]->render(renderer);
         }
     }
