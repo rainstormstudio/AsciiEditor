@@ -10,6 +10,7 @@ int main(int argc, char* argv[]) {
     for (int i = 0; i < 2; ++i) {
         for (int j = 0; j < 100; ++j) {
             gfx->clear();
+            gfx->importTxt("./assets/txt/test.txt");
             for (int k = 0; k < 10; ++k) {
                 for (int l = 0; l < 20; ++l) {
                     gfx->setCh('@', j-k-l, 15-k);

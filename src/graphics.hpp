@@ -7,6 +7,7 @@
 #include "texture.hpp"
 #include <vector>
 #include <string>
+#include <fstream>
 #include <memory>
 
 class Graphics {
@@ -31,6 +32,7 @@ public:
     void setCh(char ch, unsigned int x, unsigned int y);
     void setForeColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a, int x, int y);
     void setBackColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a, int x, int y);
+    void importTxt(std::string filename);
 
     void clear();
     void render();

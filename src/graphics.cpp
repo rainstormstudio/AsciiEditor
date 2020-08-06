@@ -24,7 +24,7 @@ Graphics::Graphics(std::string title, Uint32 fullscreenFlag,
             if (TTF_Init() == -1) {
                 std::cerr << "TTF initialization failed: " << TTF_GetError() << std::endl;
             } else {
-                font = TTF_OpenFont("assets/fonts/Monaco.ttf", 12);
+                font = TTF_OpenFont("assets/fonts/Monaco.ttf", 24);
                 if (font == nullptr) {
                     std::cerr << "Failed to load font: " << TTF_GetError() << std::endl;
                 }
@@ -73,6 +73,29 @@ void Graphics::setBackColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a, int x, int y) {
         preBuffer[y][x].bg = g;
         preBuffer[y][x].bb = b;
         preBuffer[y][x].ba = a;
+    }
+}
+
+void Graphics::importTxt(std::string filename) {
+    std::string line;
+    std::ifstream infile {filename};
+    if (infile.is_open()) {
+        int row = 0;
+        while (std::getline(infile, line)) {
+            int len = line.length();
+            if (row < numRows) {
+                for (int i = 0; i < len && i < numCols; ++i) {
+                    preBuffer[row][i] = {
+                        line[i],
+                        255, 255, 255, 255,
+                        0, 0, 0, 255};
+                }
+                ++row;
+            }
+            
+        }
+    } else {
+        std::cerr << "Could not open file " << filename << std::endl;
     }
 }
 
