@@ -26,6 +26,7 @@ int main(int argc, char* argv[]) {
     }
     gfx->clear();
     gfx->importTxt("./assets/txt/test2.txt", true);
+    gfx->writeln("Hello! This is a very very long line.", 30, 15, 10, 255, 0, 0, 255, 0, 255, 0, 255);
     gfx->render();
     char ch;
     std::cin >> ch;

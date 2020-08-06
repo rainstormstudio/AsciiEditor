@@ -34,7 +34,9 @@ public:
     void setBackColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a, int x, int y);
     void importTxt(std::string filename, bool transparent);
     void write(std::string content, int x, int y);
+    void write(std::string content, int x, int y, Uint8 r, Uint8 g, Uint8 b, Uint8 a, Uint8 br, Uint8 bg, Uint8 bb, Uint8 ba);
     void writeln(std::string content, int x, int y, int width);
+    void writeln(std::string content, int x, int y, int width, Uint8 r, Uint8 g, Uint8 b, Uint8 a, Uint8 br, Uint8 bg, Uint8 bb, Uint8 ba);
 
     void clear();
     void render();

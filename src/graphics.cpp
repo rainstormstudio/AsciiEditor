@@ -111,6 +111,16 @@ void Graphics::write(std::string content, int x, int y) {
     }
 }
 
+void Graphics::write(std::string content, int x, int y, Uint8 r, Uint8 g, Uint8 b, Uint8 a, Uint8 br, Uint8 bg, Uint8 bb, Uint8 ba) {
+    if (x >= numCols || y >= numRows) {
+        return;
+    }
+    int len = content.length();
+    for (int i = 0; i < len && x + i < numCols; ++i) {
+        preBuffer[y][x + i] = {content[i], r, g, b, a, br, bg, bb, ba};
+    }
+}
+
 void Graphics::writeln(std::string content, int x, int y, int width) {
     if (x >= numCols || y >= numRows) {
         return;
@@ -119,6 +129,22 @@ void Graphics::writeln(std::string content, int x, int y, int width) {
     int j = 0;
     for (int i = 0; i < len; ++i) {
         preBuffer[y][x + j] = {content[i], 255, 255, 255, 255, 0, 0, 0, 255};
+        ++j;
+        if (j == numCols || j == width) {
+            ++y;
+            j = 0;
+        }
+    }
+}
+
+void Graphics::writeln(std::string content, int x, int y, int width, Uint8 r, Uint8 g, Uint8 b, Uint8 a, Uint8 br, Uint8 bg, Uint8 bb, Uint8 ba) {
+    if (x >= numCols || y >= numRows) {
+        return;
+    }
+    int len = content.length();
+    int j = 0;
+    for (int i = 0; i < len; ++i) {
+        preBuffer[y][x + j] = {content[i], r, g, b, a, br, bg, bb, ba};
         ++j;
         if (j == numCols || j == width) {
             ++y;
