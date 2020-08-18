@@ -157,6 +157,9 @@ void Graphics::writeln(std::string content, int x, int y, int width) {
             ++y;
             j = 0;
         }
+        if (y == numRows) {
+            break;
+        }
     }
 }
 
@@ -175,6 +178,9 @@ void Graphics::writeln(std::string content, int x, int y, int width, Uint8 r, Ui
             ++y;
             j = 0;
         }
+        if (y == numRows) {
+            break;
+        }
     }
 }
 
@@ -192,6 +198,9 @@ void Graphics::writeln(std::string content, int x, int y, int width, Uint8 r, Ui
         if (j == numCols || j == width) {
             ++y;
             j = 0;
+        }
+        if (y == numRows) {
+            break;
         }
     }
 }
