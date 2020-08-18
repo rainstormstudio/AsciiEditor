@@ -64,7 +64,7 @@ Graphics::Graphics(std::string title, std::string tilesetFilename,
     }
 }
 
-void Graphics::setIndex(char index, int x, int y) {
+void Graphics::setCh(char index, int x, int y) {
     if (x < numCols && y < numRows) {
         textDisplay[y][x]->setIndex(index);
     }
@@ -118,6 +118,18 @@ void Graphics::write(std::string content, int x, int y) {
     }
 }
 
+void Graphics::write(std::string content, int x, int y, Uint8 r, Uint8 g, Uint8 b, Uint8 a) {
+    if (x >= numCols || y >= numRows) {
+        return;
+    }
+    int len = content.length();
+    for (int i = 0; i < len && x + i < numCols; ++i) {
+        textDisplay[y][x + i]->setIndex(content[i]);
+        textDisplay[y][x + i]->setForeColor(r, g, b, a);
+        textDisplay[y][x + i]->setBackColor(0, 0, 0, 255);
+    }
+}
+
 void Graphics::write(std::string content, int x, int y, Uint8 r, Uint8 g, Uint8 b, Uint8 a, Uint8 br, Uint8 bg, Uint8 bb, Uint8 ba) {
     if (x >= numCols || y >= numRows) {
         return;
@@ -139,6 +151,24 @@ void Graphics::writeln(std::string content, int x, int y, int width) {
     for (int i = 0; i < len; ++i) {
         textDisplay[y][x + j]->setIndex(content[i]);
         textDisplay[y][x + j]->setForeColor(255, 255, 255, 255);
+        textDisplay[y][x + j]->setBackColor(0, 0, 0, 255);
+        ++j;
+        if (j == numCols || j == width) {
+            ++y;
+            j = 0;
+        }
+    }
+}
+
+void Graphics::writeln(std::string content, int x, int y, int width, Uint8 r, Uint8 g, Uint8 b, Uint8 a) {
+    if (x >= numCols || y >= numRows) {
+        return;
+    }
+    int len = content.length();
+    int j = 0;
+    for (int i = 0; i < len; ++i) {
+        textDisplay[y][x + j]->setIndex(content[i]);
+        textDisplay[y][x + j]->setForeColor(r, g, b, a);
         textDisplay[y][x + j]->setBackColor(0, 0, 0, 255);
         ++j;
         if (j == numCols || j == width) {

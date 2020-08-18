@@ -14,7 +14,7 @@ int main(int argc, char* argv[]) {
             gfx->clear();
             for (int k = 0; k < 10; ++k) {
                 for (int l = 0; l < 20; ++l) {
-                    gfx->setIndex('@', j-k-l, 17-k);
+                    gfx->setCh('@', j-k-l, 17-k);
                     gfx->setForeColor(round(255.0 * (j-20) / 50.0), 
                                       int(round(500.0 - 500.0 * (j-20) / 50.0)) % 255, 
                                       255 - int(round(500.0 - 500.0 * (j-20) / 50.0)) % 255, 

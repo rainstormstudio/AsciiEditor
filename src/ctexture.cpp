@@ -44,8 +44,10 @@ void CTexture::setBlendMode(SDL_BlendMode blending) {
 
 void CTexture::render(SDL_Renderer* renderer) {
     SDL_SetTextureColorMod(background, backColor.r, backColor.g, backColor.b);
+    SDL_SetTextureAlphaMod(background, backColor.a);
     SDL_Rect backSrcRect = {static_cast<int>((219 % numSrcCols) * srcRect.w), static_cast<int>((219 / numSrcCols) * srcRect.h), srcRect.w, srcRect.h};
     SDL_RenderCopyEx(renderer, background, &backSrcRect, &destRect, 0.0, nullptr, SDL_FLIP_NONE);
     SDL_SetTextureColorMod(texture, foreColor.r, foreColor.g, foreColor.b);
+    SDL_SetTextureAlphaMod(texture, foreColor.a);
     SDL_RenderCopyEx(renderer, texture, &srcRect, &destRect, 0.0, nullptr, SDL_FLIP_NONE);
 }
