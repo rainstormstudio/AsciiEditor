@@ -5,12 +5,12 @@
 #include <cmath>
 
 int main(int argc, char* argv[]) {
-    Graphics * gfx = new Graphics("AsciiEditor", "./assets/tilesets/Vintl01.png", 16, 16, 0, "./assets/fonts/Monaco.ttf", 800, 600, 30, 80);
+    Graphics * gfx = new Graphics("AsciiEditor", "./assets/tilesets/Vintl01.png", 16, 16, 0, "./assets/fonts/Monaco.ttf", 1280, 960, 30, 80);
 
 
     for (int i = 0; i < 1; ++i) {
         for (int j = 0; j < 100; ++j) {
-            for (int k = 0; k < 90000000; ++k);
+            for (int k = 0; k < 9000000; ++k);
             gfx->clear();
             for (int k = 0; k < 10; ++k) {
                 for (int l = 0; l < 20; ++l) {

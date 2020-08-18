@@ -9,6 +9,7 @@
 
 class CTexture {
     SDL_Texture* texture;
+    SDL_Texture* background;
     unsigned int numSrcRows;
     unsigned int numSrcCols;
     SDL_Rect srcRect;

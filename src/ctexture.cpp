@@ -3,6 +3,7 @@
 CTexture::CTexture(SDL_Texture* texture, unsigned int numSrcRows, unsigned int numSrcCols, 
     unsigned int tileWidth, unsigned int tileHeight, unsigned int width, unsigned int height)
     : texture{texture}, numSrcRows{numSrcRows}, numSrcCols{numSrcCols} {
+    background = texture;
 
     srcRect = {0, 0, static_cast<int>(tileWidth), static_cast<int>(tileHeight)};
     destRect = {0, 0, static_cast<int>(width), static_cast<int>(height)};
@@ -42,6 +43,9 @@ void CTexture::setBlendMode(SDL_BlendMode blending) {
 }
 
 void CTexture::render(SDL_Renderer* renderer) {
+    SDL_SetTextureColorMod(background, backColor.r, backColor.g, backColor.b);
+    SDL_Rect backSrcRect = {static_cast<int>((219 % numSrcCols) * srcRect.w), static_cast<int>((219 / numSrcCols) * srcRect.h), srcRect.w, srcRect.h};
+    SDL_RenderCopyEx(renderer, background, &backSrcRect, &destRect, 0.0, nullptr, SDL_FLIP_NONE);
     SDL_SetTextureColorMod(texture, foreColor.r, foreColor.g, foreColor.b);
     SDL_RenderCopyEx(renderer, texture, &srcRect, &destRect, 0.0, nullptr, SDL_FLIP_NONE);
 }
