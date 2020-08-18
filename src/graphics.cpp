@@ -19,6 +19,7 @@ Graphics::Graphics(std::string title, std::string tilesetFilename,
     } else {
         window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, screenWidth, screenHeight, SDL_WINDOW_SHOWN);
         SDL_SetWindowFullscreen(window, fullscreen);
+        SDL_RaiseWindow(window);
         if (window == nullptr) {
             std::cerr << "Failed to create window: " << SDL_GetError() << std::endl;
         } else {
