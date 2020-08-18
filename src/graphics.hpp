@@ -53,6 +53,9 @@ public:
 
     void clear();
     void render();
+
+    unsigned int getScreenRows() const;
+    unsigned int getScreenCols() const;
 };
 
 #endif
