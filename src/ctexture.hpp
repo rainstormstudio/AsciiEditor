@@ -13,7 +13,7 @@ class CTexture {
     unsigned int numSrcCols;
     SDL_Rect srcRect;
     SDL_Rect destRect;
-    SDL_Color textColor;
+    SDL_Color foreColor;
     SDL_Color backColor;
 public:
     CTexture(SDL_Texture* texture, unsigned int numSrcRows, unsigned int numSrcCols, 

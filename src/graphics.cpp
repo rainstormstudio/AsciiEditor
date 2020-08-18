@@ -43,6 +43,7 @@ Graphics::Graphics(std::string title, std::string tilesetFilename,
     if (surface == nullptr) {
         std::cerr << "Error initializing SDL surface: " << IMG_GetError() << std::endl;
     } else {
+        SDL_SetColorKey(surface, SDL_TRUE, SDL_MapRGB(surface->format, 255, 0, 255));
         tileset = SDL_CreateTextureFromSurface(renderer, surface);
         if (tileset == nullptr) {
             std::cerr << "Error creating texture from " << tilesetFilename << ": " << SDL_GetError() << std::endl;
