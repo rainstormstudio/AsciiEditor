@@ -4,7 +4,7 @@
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_image.h"
 #include "SDL2/SDL_ttf.h"
-#include "texture.hpp"
+#include "ctexture.hpp"
 #include <vector>
 #include <string>
 #include <fstream>
@@ -15,21 +15,30 @@ class Graphics {
     SDL_Window* window;
     SDL_Renderer* renderer;
     TTF_Font* font;
+
+    SDL_Texture* tileset;
+    unsigned int numSrcRows;
+    unsigned int numSrcCols;
+    unsigned int tileWidth;
+    unsigned int tileHeight;
+
     Uint32 fullscreen;
     unsigned int screenWidth;
     unsigned int screenHeight;
+
     unsigned int numRows;
     unsigned int numCols;
-    std::vector<std::vector<Buffer>> preBuffer;
-    std::vector<std::vector<std::shared_ptr<Texture>>> textDisplay;
+    std::vector<std::vector<std::shared_ptr<CTexture>>> textDisplay;
 
 public:
-    Graphics(std::string title, Uint32 fullscreenFlag, std::string fontPath,
+    Graphics(std::string title, std::string tilesetFilename, 
+             unsigned int numSrcRows, unsigned int numSrcCols,
+             Uint32 fullscreenFlag, std::string fontPath,
              unsigned int screenWidth, unsigned int screenHeight,
              unsigned int numRows, unsigned int numCols);
     ~Graphics();
 
-    void setCh(char ch, unsigned int x, unsigned int y);
+    void setIndex(char index, int x, int y);
     void setForeColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a, int x, int y);
     void setBackColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a, int x, int y);
     void importTxt(std::string filename, bool transparent);
