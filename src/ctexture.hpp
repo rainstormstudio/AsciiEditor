@@ -27,6 +27,7 @@ class CTexture {
     SDL_Rect destRect;
     SDL_Color foreColor;
     SDL_Color backColor;
+    
 public:
     /**
      * @brief Construct a new CTexture object
