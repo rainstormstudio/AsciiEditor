@@ -7,12 +7,12 @@ struct Cpixel {
 };
 
 Sketchpad::Sketchpad(Graphics* gfx, unsigned int top, unsigned int left, unsigned int width, unsigned int height)
-    : gfx{gfx}, top{top}, left{left}, width{width}, height{height} {
+    : Panel(gfx, top, left), width{width}, height{height} {
     cpixels = std::vector<std::vector<Cpixel>>(height);
     for (unsigned int i = 0; i < height; ++i) {
         cpixels[i] = std::vector<Cpixel>(width);
         for (unsigned int j = 0; j < width; ++j) {
-            cpixels[i][j] = {'0', 255, 255, 255, 255, 0, 0, 0, 255};
+            cpixels[i][j] = {'0', 0, 0, 0, 0, 100, 100, 100, 255};
         }
     }
 }
@@ -29,7 +29,7 @@ void Sketchpad::render() {
         for (unsigned int j = 0; j < width; ++j) {
             gfx->setCh(cpixels[i][j].ch, j + left, i + top);
             gfx->setForeColor(cpixels[i][j].r, cpixels[i][j].g, cpixels[i][j].b, cpixels[i][j].a, j + left, i + top);
-            gfx->setBackColor(cpixels[i][j].br, cpixels[i][j].bg, cpixels[i][j].bb, cpixels[i][j].a, j + left, i + top);
+            gfx->setBackColor(cpixels[i][j].br, cpixels[i][j].bg, cpixels[i][j].bb, cpixels[i][j].ba, j + left, i + top);
         }
     }
 }
