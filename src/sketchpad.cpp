@@ -1,13 +1,7 @@
 #include "sketchpad.hpp"
 
-struct Cpixel {
-    char ch;
-    Uint8 r, g, b, a;
-    Uint8 br, bg, bb, ba;
-};
-
 Sketchpad::Sketchpad(Graphics* gfx, unsigned int top, unsigned int left, unsigned int width, unsigned int height)
-    : Panel(gfx, top, left), width{width}, height{height} {
+    : Panel(gfx, top, left, width, height) {
     cpixels = std::vector<std::vector<Cpixel>>(height);
     for (unsigned int i = 0; i < height; ++i) {
         cpixels[i] = std::vector<Cpixel>(width);
@@ -27,6 +21,7 @@ void Sketchpad::drawPoint(char ch, int x, int y, Uint8 r , Uint8 g, Uint8 b, Uin
 void Sketchpad::render() {
     for (unsigned int i = 0; i < height; ++i) {
         for (unsigned int j = 0; j < width; ++j) {
+            //std::cout << cpixels[i][j].ch << " (" << i << "," << j << ")" << std::endl;
             gfx->setCh(cpixels[i][j].ch, j + left, i + top);
             gfx->setForeColor(cpixels[i][j].r, cpixels[i][j].g, cpixels[i][j].b, cpixels[i][j].a, j + left, i + top);
             gfx->setBackColor(cpixels[i][j].br, cpixels[i][j].bg, cpixels[i][j].bb, cpixels[i][j].ba, j + left, i + top);

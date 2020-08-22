@@ -1,5 +1,6 @@
 #include "graphics.hpp"
 #include "sketchpad.hpp"
+#include "statuspad.hpp"
 #include "SDL2/SDL.h"
 
 #include <iostream>
@@ -8,12 +9,25 @@
 int main(int argc, char* argv[]) {
     Graphics* gfx = new Graphics("AsciiEditor", "./assets/tilesets/Vintl01.png", 16, 16, 0, "./assets/fonts/Monaco.ttf", 1280, 960, 60, 80);
     Sketchpad* sketchpad = new Sketchpad(gfx, 0, 20, 60, 60);
+    Statuspad* statuspad = new Statuspad(gfx, 0, 0, 20, 5);
     SDL_Event event;
 
     bool loop = true;
     while (loop) {
         gfx->clear();
         sketchpad->render();
+
+        int x = 0, y = 0;
+        for (unsigned int i = 0; i < 16 * 16; ++i) {
+            if (i > 0 && i % 16 == 0) {
+                x = 0;
+                ++y;
+            }
+            sketchpad->drawPoint(i, x, y, 0, 0, 0, 255, 100, 100, 100, 255);
+            ++x;            
+        }
+
+        statuspad->render();
         gfx->render();
 
         while (SDL_PollEvent(&event) != 0) {
@@ -23,6 +37,7 @@ int main(int argc, char* argv[]) {
         }
     }
 
+    delete sketchpad;
     delete gfx;
     return 0;
 }
