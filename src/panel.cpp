@@ -1,7 +1,7 @@
 #include "panel.hpp"
 
-Panel::Panel(Graphics* gfx, unsigned int top, unsigned int left, unsigned int width, unsigned int height)
-    : gfx{gfx}, top{top}, left{left}, width{width}, height{height} {}
+Panel::Panel(Graphics* gfx, SDL_Event* event, unsigned int top, unsigned int left, unsigned int width, unsigned int height)
+    : gfx{gfx}, event{event}, top{top}, left{left}, width{width}, height{height} {}
 
 void Panel::drawBorder(std::string title) {
     for (unsigned int i = 1; i < height - 1; ++i) {
@@ -36,3 +36,7 @@ void Panel::fillForeColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a) {
         }
     }
 }
+
+unsigned int Panel::getTop() const { return top; }
+
+unsigned int Panel::getLeft() const { return left; }

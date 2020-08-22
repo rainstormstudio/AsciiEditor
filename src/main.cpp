@@ -8,12 +8,14 @@
 
 int main(int argc, char* argv[]) {
     Graphics* gfx = new Graphics("AsciiEditor", "./assets/tilesets/Vintl01.png", 16, 16, 0, "./assets/fonts/Monaco.ttf", 1280, 960, 60, 80);
-    Sketchpad* sketchpad = new Sketchpad(gfx, 0, 20, 60, 60);
-    Statuspad* statuspad = new Statuspad(gfx, 0, 0, 20, 5);
     SDL_Event event;
+    Sketchpad* sketchpad = new Sketchpad(gfx, &event, 0, 20, 60, 60);
+    Statuspad* statuspad = new Statuspad(gfx, &event, 0, 0, 20, 5, sketchpad);
 
     bool loop = true;
     while (loop) {
+        sketchpad->update();
+
         gfx->clear();
         sketchpad->render();
 
