@@ -1,4 +1,5 @@
 #include "graphics.hpp"
+#include "charpad.hpp"
 #include "sketchpad.hpp"
 #include "statuspad.hpp"
 #include "SDL2/SDL.h"
@@ -9,15 +10,17 @@
 int main(int argc, char* argv[]) {
     Graphics* gfx = new Graphics("AsciiEditor", "./assets/tilesets/Vintl01.png", 16, 16, 0, "./assets/fonts/Monaco.ttf", 1280, 960, 60, 80);
     SDL_Event event;
+    Charpad* charpad = new Charpad(gfx, &event, 6, 0, 20, 20);
     Sketchpad* sketchpad = new Sketchpad(gfx, &event, 0, 20, 60, 60);
-    Statuspad* statuspad = new Statuspad(gfx, &event, 0, 0, 20, 5, sketchpad);
+    Statuspad* statuspad = new Statuspad(gfx, &event, 0, 0, 20, 6, sketchpad);
 
     bool loop = true;
     while (loop) {
-        sketchpad->update();
+        charpad->update();
 
         gfx->clear();
         sketchpad->render();
+        charpad->render();
 
         int x = 0, y = 0;
         for (unsigned int i = 0; i < 16 * 16; ++i) {
@@ -25,10 +28,11 @@ int main(int argc, char* argv[]) {
                 x = 0;
                 ++y;
             }
-            sketchpad->drawPoint(i, x, y, 0, 0, 0, 255, 100, 100, 100, 255);
+            sketchpad->drawPoint(i, x, y, i, 0, 0, 255, 100, 100, 100, 255);
             ++x;            
         }
 
+        sketchpad->update();
         statuspad->render();
         gfx->render();
 
@@ -40,6 +44,8 @@ int main(int argc, char* argv[]) {
     }
 
     delete sketchpad;
+    delete statuspad;
+    delete charpad;
     delete gfx;
     return 0;
 }

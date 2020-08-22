@@ -6,7 +6,7 @@ Sketchpad::Sketchpad(Graphics* gfx, SDL_Event* event, unsigned int top, unsigned
     for (unsigned int i = 0; i < height; ++i) {
         cpixels[i] = std::vector<Cpixel>(width);
         for (unsigned int j = 0; j < width; ++j) {
-            cpixels[i][j] = {'0', 0, 0, 0, 0, 100, 100, 100, 255};
+            cpixels[i][j] = {0, 0, 0, 0, 0, 100, 100, 100, 255};
         }
     }
     cursorX = 0;
@@ -44,10 +44,27 @@ void Sketchpad::render() {
         }
     }
     if (cursorX != -1 && cursorY != -1) {
-        gfx->setBackColor(255, 0, 0, 255, cursorX + left, cursorY + top);
+        unsigned int x = cursorX + left;
+        unsigned int y = cursorY + top;
+        int r = (cpixels[cursorY][cursorX].r + 128) % 255;
+        int g = (cpixels[cursorY][cursorX].g + 128) % 255;
+        int b = (cpixels[cursorY][cursorX].b + 128) % 255;
+        int br = (cpixels[cursorY][cursorX].br + 128) % 255;
+        int bg = (cpixels[cursorY][cursorX].bg + 128) % 255;
+        int bb = (cpixels[cursorY][cursorX].bb + 128) % 255;
+        gfx->setForeColor(r, g, b, 255, x, y);
+        gfx->setBackColor(br, bg, bb, 255, x, y);
     }
 }
 
 int Sketchpad::getCursorX() const { return cursorX; }
 
 int Sketchpad::getCursorY() const { return cursorY; }
+
+Cpixel Sketchpad::getCellInfo(int x, int y) const {
+    if (x < 0 || x >= width || y < 0 || y >= height) {
+        return {};
+    } else {
+        return cpixels[y][x];
+    }
+}

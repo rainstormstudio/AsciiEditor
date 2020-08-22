@@ -24,7 +24,7 @@ public:
     int getCursorX() const;
     int getCursorY() const;
 
-
+    Cpixel getCellInfo(int x, int y) const;
 };
 
 #endif

@@ -114,8 +114,6 @@ void Graphics::write(std::string content, int x, int y) {
     int len = content.length();
     for (int i = 0; i < len && x + i < numCols; ++i) {
         textDisplay[y][x + i]->setIndex(content[i]);
-        textDisplay[y][x + i]->setForeColor(255, 255, 255, 255);
-        textDisplay[y][x + i]->setBackColor(0, 0, 0, 255);        
     }
 }
 
@@ -127,7 +125,6 @@ void Graphics::write(std::string content, int x, int y, Uint8 r, Uint8 g, Uint8 
     for (int i = 0; i < len && x + i < numCols; ++i) {
         textDisplay[y][x + i]->setIndex(content[i]);
         textDisplay[y][x + i]->setForeColor(r, g, b, a);
-        textDisplay[y][x + i]->setBackColor(0, 0, 0, 255);
     }
 }
 
@@ -151,8 +148,6 @@ void Graphics::writeln(std::string content, int x, int y, int width) {
     int j = 0;
     for (int i = 0; i < len; ++i) {
         textDisplay[y][x + j]->setIndex(content[i]);
-        textDisplay[y][x + j]->setForeColor(255, 255, 255, 255);
-        textDisplay[y][x + j]->setBackColor(0, 0, 0, 255);
         ++j;
         if (j == numCols || j == width) {
             ++y;
@@ -173,7 +168,6 @@ void Graphics::writeln(std::string content, int x, int y, int width, Uint8 r, Ui
     for (int i = 0; i < len; ++i) {
         textDisplay[y][x + j]->setIndex(content[i]);
         textDisplay[y][x + j]->setForeColor(r, g, b, a);
-        textDisplay[y][x + j]->setBackColor(0, 0, 0, 255);
         ++j;
         if (j == numCols || j == width) {
             ++y;
