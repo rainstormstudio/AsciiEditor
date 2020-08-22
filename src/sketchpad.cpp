@@ -1,7 +1,7 @@
 #include "sketchpad.hpp"
 
-Sketchpad::Sketchpad(Graphics* gfx, SDL_Event* event, unsigned int top, unsigned int left, unsigned int width, unsigned int height)
-    : Panel(gfx, event, top, left, width, height) {
+Sketchpad::Sketchpad(Graphics* gfx, SDL_Event* event, unsigned int top, unsigned int left, unsigned int width, unsigned int height, Charpad* charpad)
+    : Panel(gfx, event, top, left, width, height), charpad{charpad} {
     cpixels = std::vector<std::vector<Cpixel>>(height);
     for (unsigned int i = 0; i < height; ++i) {
         cpixels[i] = std::vector<Cpixel>(width);
@@ -11,6 +11,7 @@ Sketchpad::Sketchpad(Graphics* gfx, SDL_Event* event, unsigned int top, unsigned
     }
     cursorX = 0;
     cursorY = 0;
+    brushDown = false;
 }
 
 void Sketchpad::drawPoint(Uint8 ch, int x, int y, Uint8 r , Uint8 g, Uint8 b, Uint8 a, Uint8 br, Uint8 bg, Uint8 bb, Uint8 ba) {
@@ -31,6 +32,21 @@ void Sketchpad::update() {
     } else {
         cursorX = -1;
         cursorY = -1;
+    }
+    if (event->type == SDL_MOUSEBUTTONDOWN) {
+        if (event->button.button == SDL_BUTTON_LEFT) {
+            brushDown = true;
+        }
+    } else if (event->type == SDL_MOUSEBUTTONUP) {
+        if (event->button.button == SDL_BUTTON_LEFT) {
+            brushDown = false;
+        }
+    }
+    if (brushDown) {
+        if (cursorX >= 0 && cursorX < width
+            && cursorY >= 0 && cursorY < height) {
+            cpixels[cursorY][cursorX] = {charpad->getSelected(), 0, 255, 0, 255, 100, 100, 0, 255};
+        }
     }
 }
 

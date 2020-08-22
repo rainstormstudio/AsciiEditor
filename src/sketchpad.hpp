@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "panel.hpp"
+#include "charpad.hpp"
 
 struct Cpixel {
     Uint8 ch;
@@ -11,12 +12,14 @@ struct Cpixel {
 };
 
 class Sketchpad : public Panel {
+    Charpad* charpad;
     int cursorX;
     int cursorY;
     std::vector<std::vector<Cpixel>> cpixels;
+    bool brushDown;
 
 public:
-    Sketchpad(Graphics* gfx, SDL_Event* event, unsigned int top, unsigned int left, unsigned int width, unsigned int height);
+    Sketchpad(Graphics* gfx, SDL_Event* event, unsigned int top, unsigned int left, unsigned int width, unsigned int height, Charpad* charpad);
     void drawPoint(Uint8 ch, int x, int y, Uint8 r, Uint8 g, Uint8 b, Uint8 a, Uint8 br, Uint8 bg, Uint8 bb, Uint8 ba);
     void update() override;
     void render() override;

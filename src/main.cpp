@@ -11,7 +11,7 @@ int main(int argc, char* argv[]) {
     Graphics* gfx = new Graphics("AsciiEditor", "./assets/tilesets/Vintl01.png", 16, 16, 0, "./assets/fonts/Monaco.ttf", 1280, 960, 60, 80);
     SDL_Event event;
     Charpad* charpad = new Charpad(gfx, &event, 6, 0, 20, 20);
-    Sketchpad* sketchpad = new Sketchpad(gfx, &event, 0, 20, 60, 60);
+    Sketchpad* sketchpad = new Sketchpad(gfx, &event, 0, 20, 60, 60, charpad);
     Statuspad* statuspad = new Statuspad(gfx, &event, 0, 0, 20, 6, sketchpad);
 
     bool loop = true;
