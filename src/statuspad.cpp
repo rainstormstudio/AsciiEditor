@@ -6,4 +6,5 @@ Statuspad::Statuspad(Graphics* gfx, unsigned int top, unsigned int left, unsigne
 void Statuspad::render() {
     drawBorder("STATUS");
     fillBackColor(40, 90, 80, 255);
+    fillForeColor(0, 255, 255, 255);
 }

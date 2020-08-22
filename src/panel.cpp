@@ -28,3 +28,11 @@ void Panel::fillBackColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a) {
         }
     }
 }
+
+void Panel::fillForeColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a) {
+    for (unsigned int i = 0; i < height; ++i) {
+        for (unsigned int j = 0; j < width; ++j) {
+            gfx->setForeColor(r, g, b, a, j + left, i + top);
+        }
+    }
+}
