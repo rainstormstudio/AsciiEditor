@@ -1,12 +1,12 @@
 #include "sketchpad.hpp"
 
-Sketchpad::Sketchpad(Graphics* gfx, SDL_Event* event, unsigned int top, unsigned int left, unsigned int width, unsigned int height, Charpad* charpad)
-    : Panel(gfx, event, top, left, width, height), charpad{charpad} {
+Sketchpad::Sketchpad(Graphics* gfx, SDL_Event* event, unsigned int top, unsigned int left, unsigned int width, unsigned int height, Charpad* charpad, Palettepad* palettepad)
+    : Panel(gfx, event, top, left, width, height), charpad{charpad}, palettepad{palettepad} {
     cpixels = std::vector<std::vector<Cpixel>>(height);
     for (unsigned int i = 0; i < height; ++i) {
         cpixels[i] = std::vector<Cpixel>(width);
         for (unsigned int j = 0; j < width; ++j) {
-            cpixels[i][j] = {0, 0, 0, 0, 0, 100, 100, 100, 255};
+            cpixels[i][j] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
         }
     }
     cursorX = 0;
@@ -45,7 +45,17 @@ void Sketchpad::update() {
     if (brushDown) {
         if (cursorX >= 0 && cursorX < width
             && cursorY >= 0 && cursorY < height) {
-            cpixels[cursorY][cursorX] = {charpad->getSelected(), 0, 255, 0, 255, 100, 100, 0, 255};
+            Color foreColor = palettepad->getForeColor();
+            Color backColor = palettepad->getBackColor();
+            cpixels[cursorY][cursorX] = {charpad->getSelected(), 
+                                        foreColor.r, 
+                                        foreColor.g, 
+                                        foreColor.b, 
+                                        foreColor.a, 
+                                        backColor.r, 
+                                        backColor.g, 
+                                        backColor.b, 
+                                        backColor.a};
         }
     }
 }
@@ -62,12 +72,12 @@ void Sketchpad::render() {
     if (cursorX != -1 && cursorY != -1) {
         unsigned int x = cursorX + left;
         unsigned int y = cursorY + top;
-        int r = (cpixels[cursorY][cursorX].r + 128) % 255;
-        int g = (cpixels[cursorY][cursorX].g + 128) % 255;
-        int b = (cpixels[cursorY][cursorX].b + 128) % 255;
-        int br = (cpixels[cursorY][cursorX].br + 128) % 255;
-        int bg = (cpixels[cursorY][cursorX].bg + 128) % 255;
-        int bb = (cpixels[cursorY][cursorX].bb + 128) % 255;
+        int r = cpixels[cursorY][cursorX].r > 128 ? 0 : 255;
+        int g = cpixels[cursorY][cursorX].g > 128 ? 0 : 255;
+        int b = cpixels[cursorY][cursorX].b > 128 ? 0 : 255;
+        int br = cpixels[cursorY][cursorX].br > 128 ? 0 : 255;
+        int bg = cpixels[cursorY][cursorX].bg > 128 ? 0 : 255;
+        int bb = cpixels[cursorY][cursorX].bb > 128 ? 0 : 255;
         gfx->setForeColor(r, g, b, 255, x, y);
         gfx->setBackColor(br, bg, bb, 255, x, y);
     }
