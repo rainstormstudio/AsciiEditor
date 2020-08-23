@@ -12,6 +12,3 @@ void Command::saveBackup() {
     backupInfo = sketchpad->getCellInfo(backupX, backupY);
 }
 
-void Command::undo() {
-    sketchpad->drawPoint(backupInfo, backupX, backupY);
-}

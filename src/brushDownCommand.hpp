@@ -6,6 +6,7 @@
 class BrushDownCommand : public Command {
 public:
     BrushDownCommand(Application* app, Sketchpad * sketchpad);
+    void undo() override;
     bool execute() override;
 };
 

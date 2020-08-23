@@ -14,7 +14,7 @@ Application::Application() {
     palettepad = new Palettepad(this, 26, 0, 20, 20);
     sketchpad = new Sketchpad(this, 0, 20, 60, 60, charpad, palettepad);
     statuspad = new Statuspad(this, 0, 0, 20, 6, sketchpad);
-    editpad = new Editpad(this, 46, 0, 20, 4);
+    editpad = new Editpad(this, 46, 0, 10, 4);
 
     running = true;
 }

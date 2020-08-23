@@ -16,7 +16,7 @@ protected:
 public:
     Command(Application* app, Sketchpad* sketchpad);
     void saveBackup();
-    void undo();
+    virtual void undo() = 0;
     virtual bool execute() = 0;
 };
 

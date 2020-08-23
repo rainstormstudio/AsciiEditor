@@ -6,6 +6,7 @@
 class DrawCommand : public Command {
 public:
     DrawCommand(Application* app, Sketchpad * sketchpad);
+    void undo() override;
     bool execute() override;
 };
 

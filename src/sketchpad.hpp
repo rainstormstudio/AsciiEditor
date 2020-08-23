@@ -5,6 +5,7 @@
 #include "panel.hpp"
 #include "charpad.hpp"
 #include "palettepad.hpp"
+#include <fstream>
 
 struct Cpixel {
     Uint8 ch;
@@ -24,6 +25,9 @@ public:
     void drawPoint(Cpixel info, int x, int y);
     void update() override;
     void render() override;
+
+    void saveToFile(std::string filename);
+    void loadFromFile(std::string filename);
 
     void setBrush(bool down);
     bool getBrush() const;

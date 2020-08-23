@@ -6,6 +6,7 @@
 class UndoCommand : public Command {
 public:
     UndoCommand(Application* app, Sketchpad * sketchpad);
+    void undo() override;
     bool execute() override;
 };
 

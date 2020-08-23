@@ -61,6 +61,33 @@ void Sketchpad::render() {
     }
 }
 
+void Sketchpad::saveToFile(std::string filename) {
+    std::ofstream outfile{filename};
+    if (outfile.is_open()) {
+        for (unsigned int i = 0; i < height; ++i) {
+            for (unsigned int j = 0; j < width; ++j) {
+                outfile << "("
+                        << cpixels[i][j].ch << ","
+                        << cpixels[i][j].r << ","
+                        << cpixels[i][j].g << ","
+                        << cpixels[i][j].b << ","
+                        << cpixels[i][j].a << ","
+                        << cpixels[i][j].br << ","
+                        << cpixels[i][j].bg << ","
+                        << cpixels[i][j].bb << ","
+                        << cpixels[i][j].ba << ")";
+            }
+            outfile << std::endl;
+        }
+    } else {
+        std::cerr << "Error saving file to " << filename << std::endl;
+    }
+}
+
+void Sketchpad::loadFromFile(std::string filename) {
+    //TODO: implement loadFromFile
+}
+
 void Sketchpad::setBrush(bool down) {
     brushDown = down;
 }

@@ -6,6 +6,7 @@
 class BrushUpCommand : public Command {
 public:
     BrushUpCommand(Application* app, Sketchpad * sketchpad);
+    void undo() override;
     bool execute() override;
 };
 
