@@ -10,16 +10,18 @@ Application::Application() {
     gfx = new Graphics("AsciiEditor", "./assets/tilesets/Vintl01.png", 16, 16, 0, "./assets/fonts/Monaco.ttf", 1280, 960, 60, 80);
     event = new SDL_Event();
     history = new CommandHistory();
-    charpad = new Charpad(this, 6, 0, 20, 20);
-    palettepad = new Palettepad(this, 26, 0, 20, 20);
+    charpad = new Charpad(this, 7, 0, 20, 20);
+    palettepad = new Palettepad(this, 27, 0, 20, 20);
     sketchpad = new Sketchpad(this, 0, 20, 60, 60, charpad, palettepad);
-    statuspad = new Statuspad(this, 0, 0, 20, 6, sketchpad);
-    editpad = new Editpad(this, 46, 0, 10, 4);
+    statuspad = new Statuspad(this, 0, 0, 20, 7, sketchpad);
+    editpad = new Editpad(this, 47, 0, 10, 4);
+    filepad = new Filepad(this, 51, 0, 10, 5);
 
     running = true;
 }
 
 Application::~Application() {
+    delete filepad;
     delete editpad;
     delete statuspad;
     delete sketchpad;
@@ -37,6 +39,7 @@ void Application::update() {
     palettepad->update();
     sketchpad->update();
     editpad->update();
+    filepad->update();
 }
 
 void Application::render() {
@@ -46,6 +49,7 @@ void Application::render() {
     palettepad->render();
     statuspad->render();
     editpad->render();
+    filepad->render();
     gfx->render();
 }
 

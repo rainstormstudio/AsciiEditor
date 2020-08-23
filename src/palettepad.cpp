@@ -71,7 +71,7 @@ void Palettepad::render() {
     if (cursorX != -1 && cursorY != -1) {
         int x = cursorX + left;
         int y = cursorY + top;
-        if (y - 1 > top) {
+        if (y - 1 > top && x > left && x < left + width - 1) {
             gfx->setCh('|', x, y - 1);
         }
         if (y + 2 < height + top) {

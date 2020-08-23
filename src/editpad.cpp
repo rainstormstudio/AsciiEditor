@@ -6,6 +6,7 @@ Editpad::Editpad(Application* app, unsigned int top, unsigned int left, unsigned
     : Panel(app, top, left, width, height) {
     undoButton = new Button(app, top + 1, left + 2, 6, 1, "UNDO");
 }
+
 Editpad::~Editpad() {
     delete undoButton;
 }

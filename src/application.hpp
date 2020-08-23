@@ -7,13 +7,11 @@
 #include "sketchpad.hpp"
 #include "statuspad.hpp"
 #include "editpad.hpp"
+#include "filepad.hpp"
 #include "SDL2/SDL.h"
 
 class CommandHistory;
 class Command;
-class BrushDownCommand;
-class BrushUpCommand;
-class DrawCommand;
 
 class Application {
     CommandHistory* history;
@@ -25,6 +23,7 @@ class Application {
     Sketchpad* sketchpad;
     Statuspad* statuspad;
     Editpad* editpad;
+    Filepad* filepad;
 
     bool running;
 
