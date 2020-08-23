@@ -23,7 +23,7 @@ void Panel::drawBorder(std::string title) {
     gfx->setCh(200, left, top + height - 1);
     gfx->setCh(188, left + width - 1, top + height - 1);
     if (title != "" && title.length() < width - 6) {
-        gfx->write("[" + title + "]", left + 2, top);
+        gfx->write("[" + title + "]", left + 1, top);
     }
 }
 

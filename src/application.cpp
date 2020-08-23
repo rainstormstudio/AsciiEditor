@@ -14,8 +14,7 @@ Application::Application() {
     palettepad = new Palettepad(this, 26, 0, 20, 20);
     sketchpad = new Sketchpad(this, 0, 20, 60, 60, charpad, palettepad);
     statuspad = new Statuspad(this, 0, 0, 20, 6, sketchpad);
-    UndoCommand* undo = new UndoCommand(this, sketchpad);
-    editpad = new Editpad(this, 46, 0, 20, 4, undo);
+    editpad = new Editpad(this, 46, 0, 20, 4);
 
     running = true;
 }
@@ -70,6 +69,9 @@ void Application::processInput() {
     }
     if (sketchpad->validPos() && sketchpad->getBrush()) {
         executeCommand(new DrawCommand(this, sketchpad));
+    }
+    if (editpad->undo()) {
+        executeCommand(new UndoCommand(this, sketchpad));
     }
 }
 

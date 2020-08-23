@@ -4,13 +4,13 @@
 #include "panel.hpp"
 
 class Button;
-class Command;
 
 class Editpad : public Panel {
     Button* undoButton;
 public:
-    Editpad(Application* app, unsigned int top, unsigned int left, unsigned int width, unsigned int height, Command* undo);
+    Editpad(Application* app, unsigned int top, unsigned int left, unsigned int width, unsigned int height);
     ~Editpad();
+    bool undo() const;
     void update() override;
     void render() override;
 };
