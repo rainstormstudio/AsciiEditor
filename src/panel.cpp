@@ -1,7 +1,13 @@
 #include "panel.hpp"
+#include "application.hpp"
 
-Panel::Panel(Graphics* gfx, SDL_Event* event, unsigned int top, unsigned int left, unsigned int width, unsigned int height)
-    : gfx{gfx}, event{event}, top{top}, left{left}, width{width}, height{height} {}
+Panel::Panel(Application* app, unsigned int top, unsigned int left, unsigned int width, unsigned int height)
+    : app{app}, top{top}, left{left}, width{width}, height{height} {
+    gfx = app->getGFX();
+    event = app->getEvent();
+    cursorX = -1;
+    cursorY = -1;
+}
 
 void Panel::drawBorder(std::string title) {
     for (unsigned int i = 1; i < height - 1; ++i) {
@@ -37,6 +43,28 @@ void Panel::fillForeColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a) {
     }
 }
 
+bool Panel::validPos() const {
+    if (cursorX != -1 && cursorY != -1) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 unsigned int Panel::getTop() const { return top; }
 
 unsigned int Panel::getLeft() const { return left; }
+
+void Panel::updateCursor() {
+    int x = 0, y = 0;
+    SDL_GetMouseState(&x, &y);
+    x = gfx->getPosCol(x);
+    y = gfx->getPosRow(y);
+    if (x - left >= 0 && x - left < width && y - top >= 0 && y - top < height) {
+        cursorX = x - left;
+        cursorY = y - top;
+    } else {
+        cursorX = -1;
+        cursorY = -1;
+    }
+}

@@ -1,24 +1,12 @@
 #include "charpad.hpp"
 
-Charpad::Charpad(Graphics* gfx, SDL_Event* event, unsigned int top, unsigned int left, unsigned int width, unsigned int height)
-    : Panel(gfx, event, top, left, width, height) {
+Charpad::Charpad(Application* app, unsigned int top, unsigned int left, unsigned int width, unsigned int height)
+    : Panel(app, top, left, width, height) {
     selected = 0;
-    cursorX = 0;
-    cursorY = 0;
 }
 
 void Charpad::update() {
-    int x = 0, y = 0;
-    SDL_GetMouseState(&x, &y);
-    x = gfx->getPosCol(x);
-    y = gfx->getPosRow(y);
-    if (x - left >= 0 && x - left < width && y - top >= 0 && y - top < height) {
-        cursorX = x - left;
-        cursorY = y - top;
-    } else {
-        cursorX = -1;
-        cursorY = -1;
-    }
+    updateCursor();
     if (event->type == SDL_MOUSEBUTTONDOWN) {
         if (cursorX - 2 >= 0 && cursorX - 2 < 16
             && cursorY - 2 >= 0 && cursorY - 2 < 16) {

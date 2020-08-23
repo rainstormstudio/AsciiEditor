@@ -9,7 +9,7 @@ class Statuspad : public Panel {
 
     std::string prefix(char ch, std::string str, int width);
 public:
-    Statuspad(Graphics * gfx, SDL_Event* event, unsigned int top, unsigned int left, unsigned int width, unsigned int height, Sketchpad* sketchpad);
+    Statuspad(Application* app, unsigned int top, unsigned int left, unsigned int width, unsigned int height, Sketchpad* sketchpad);
     void update() override;
     void render() override;
 };

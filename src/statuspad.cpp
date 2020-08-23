@@ -11,8 +11,8 @@ std::string Statuspad::prefix(char ch, std::string str, int width) {
     }
 }
 
-Statuspad::Statuspad(Graphics* gfx, SDL_Event* event, unsigned int top, unsigned int left, unsigned int width, unsigned int height, Sketchpad* sketchpad)
-    : Panel(gfx, event, top, left, width, height), sketchpad{sketchpad} {
+Statuspad::Statuspad(Application* app, unsigned int top, unsigned int left, unsigned int width, unsigned int height, Sketchpad* sketchpad)
+    : Panel(app, top, left, width, height), sketchpad{sketchpad} {
 }
 
 void Statuspad::update() {
@@ -27,7 +27,7 @@ void Statuspad::render() {
     Cpixel cpixel = sketchpad->getCellInfo(x, y);
     if (x != -1 && y != -1) {
         gfx->write("x: " + prefix(' ', std::to_string(x), 2), left + 1, top + 1);
-        gfx->write("y: " + prefix('0', std::to_string(y), 2), left + 7, top + 1);
+        gfx->write("y: " + prefix(' ', std::to_string(y), 2), left + 7, top + 1);
         gfx->write("char: ", left + 1, top + 2);
         gfx->setCh(cpixel.ch, left + 6, top + 2);
         gfx->write("fRGB(" + prefix('0', std::to_string(cpixel.r), 3) + "," + 

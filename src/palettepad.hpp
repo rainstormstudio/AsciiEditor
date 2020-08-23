@@ -12,11 +12,9 @@ class Palettepad : public Panel {
     unsigned int selectedBack;
     Color selectedForeColor;
     Color selectedBackColor;
-    int cursorX;
-    int cursorY;
     std::vector<std::vector<Color>> palette;
 public:
-    Palettepad(Graphics* gfx, SDL_Event* event, unsigned int top, unsigned int left, unsigned int width, unsigned int height);
+    Palettepad(Application* app, unsigned int top, unsigned int left, unsigned int width, unsigned int height);
     void update() override;
     void render() override;
 

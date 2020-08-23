@@ -1,7 +1,7 @@
 #include "palettepad.hpp"
 
-Palettepad::Palettepad(Graphics* gfx, SDL_Event* event, unsigned int top, unsigned int left, unsigned int width, unsigned int height) 
-    : Panel(gfx, event, top, left, width, height) {
+Palettepad::Palettepad(Application* app, unsigned int top, unsigned int left, unsigned int width, unsigned int height) 
+    : Panel(app, top, left, width, height) {
     palette = std::vector<std::vector<Color>>(18);
     for (unsigned int i = 0; i < 18; ++i) {
         palette[i] = std::vector<Color>(18);
@@ -31,17 +31,7 @@ Palettepad::Palettepad(Graphics* gfx, SDL_Event* event, unsigned int top, unsign
 }
 
 void Palettepad::update() {
-    int x = 0, y = 0;
-    SDL_GetMouseState(&x, &y);
-    x = gfx->getPosCol(x);
-    y = gfx->getPosRow(y);
-    if (x - left >= 0 && x - left < width && y - top >= 0 && y - top < height) {
-        cursorX = x - left;
-        cursorY = y - top;
-    } else {
-        cursorX = -1;
-        cursorY = -1;
-    }
+    updateCursor();
     if (event->type == SDL_MOUSEBUTTONDOWN) {
         if (cursorX - 1 >= 0 && cursorX - 1 < 18
             && cursorY - 1 >= 0 && cursorY - 1 < 18) {
