@@ -18,7 +18,7 @@ Application::Application() {
     statuspad = new Statuspad(this, 0, 0, 20, 7, sketchpad);
     editpad = new Editpad(this, 47, 0, 8, 4);
     filepad = new Filepad(this, 51, 0, 8, 5);
-    toolpad = new Toolpad(this, 47, 8, 12, 8);
+    toolpad = new Toolpad(this, 47, 8, 12, 9);
 
     running = true;
 }
@@ -78,6 +78,10 @@ void Application::processInput() {
                 if (sketchpad->validPos()) {
                     executeCommand(new BrushUpCommand(this, sketchpad));
                 }
+            }
+        } else if (event->type == SDL_KEYDOWN) {
+            if (event->key.keysym.sym == SDLK_z && SDL_GetModState() & KMOD_CTRL) {
+                executeCommand(new UndoCommand(this, sketchpad));
             }
         }
     }
