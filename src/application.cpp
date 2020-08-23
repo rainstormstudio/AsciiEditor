@@ -5,6 +5,8 @@
 #include "brushDownCommand.hpp"
 #include "brushUpCommand.hpp"
 #include "drawCommand.hpp"
+#include "drawPosCommand.hpp"
+#include "fillCommand.hpp"
 
 Application::Application() {
     gfx = new Graphics("AsciiEditor", "./assets/tilesets/Vintl01.png", 16, 16, 0, "./assets/fonts/Monaco.ttf", 1280, 960, 60, 80);
@@ -16,11 +18,13 @@ Application::Application() {
     statuspad = new Statuspad(this, 0, 0, 20, 7, sketchpad);
     editpad = new Editpad(this, 47, 0, 10, 4);
     filepad = new Filepad(this, 51, 0, 10, 5);
+    toolpad = new Toolpad(this, 47, 10, 10, 5);
 
     running = true;
 }
 
 Application::~Application() {
+    delete toolpad;
     delete filepad;
     delete editpad;
     delete statuspad;
@@ -40,6 +44,7 @@ void Application::update() {
     sketchpad->update();
     editpad->update();
     filepad->update();
+    toolpad->update();
 }
 
 void Application::render() {
@@ -50,6 +55,7 @@ void Application::render() {
     statuspad->render();
     editpad->render();
     filepad->render();
+    toolpad->render();
     gfx->render();
 }
 
@@ -60,7 +66,11 @@ void Application::processInput() {
         } else if (event->type == SDL_MOUSEBUTTONDOWN) {
             if (event->button.button == SDL_BUTTON_LEFT) {
                 if (sketchpad->validPos()) {
-                    executeCommand(new BrushDownCommand(this, sketchpad));
+                    if (toolpad->getSelected() == 0 || toolpad->getSelected() == 1) {
+                        executeCommand(new BrushDownCommand(this, sketchpad));
+                    } else if (toolpad->getSelected() == 2) {
+                        executeCommand(new FillCommand(this, sketchpad));
+                    }
                 }
             }
         } else if (event->type == SDL_MOUSEBUTTONUP) {
@@ -72,7 +82,11 @@ void Application::processInput() {
         }
     }
     if (sketchpad->validPos() && sketchpad->getBrush()) {
-        executeCommand(new DrawCommand(this, sketchpad));
+        if (toolpad->getSelected() == 0) {
+            executeCommand(new DrawCommand(this, sketchpad));
+        } else if (toolpad->getSelected() == 1) {
+            executeCommand(new DrawPosCommand(this, sketchpad, {0, 0, 0, 0, 0, 0, 0, 0, 0}, sketchpad->getCursorX(), sketchpad->getCursorY()));
+        }
     }
     if (editpad->undo()) {
         executeCommand(new UndoCommand(this, sketchpad));

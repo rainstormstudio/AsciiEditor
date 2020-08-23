@@ -8,6 +8,7 @@
 #include "statuspad.hpp"
 #include "editpad.hpp"
 #include "filepad.hpp"
+#include "toolpad.hpp"
 #include "SDL2/SDL.h"
 
 class CommandHistory;
@@ -24,6 +25,7 @@ class Application {
     Statuspad* statuspad;
     Editpad* editpad;
     Filepad* filepad;
+    Toolpad* toolpad;
 
     bool running;
 

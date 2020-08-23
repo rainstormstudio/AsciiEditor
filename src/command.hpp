@@ -15,7 +15,7 @@ protected:
     Cpixel backupInfo;
 public:
     Command(Application* app, Sketchpad* sketchpad);
-    void saveBackup();
+    virtual void saveBackup();
     virtual void undo() = 0;
     virtual bool execute() = 0;
 };

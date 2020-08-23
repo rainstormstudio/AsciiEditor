@@ -1,4 +1,26 @@
 #include "sketchpad.hpp"
+#include "application.hpp"
+#include "brushDownCommand.hpp"
+#include "brushUpCommand.hpp"
+#include "drawCommand.hpp"
+#include "drawPosCommand.hpp"
+
+void Sketchpad::fill(Cpixel prevColor, Cpixel newColor, int x, int y) {
+    if (!(x >= 0 && x < width && y >= 0 && y < height)) {
+        return;        
+    }
+    if (!(cpixels[y][x] == prevColor)) {
+        return;
+    }
+    if (cpixels[y][x] == newColor) {
+        return;
+    }
+    app->executeCommand(new DrawPosCommand(app, this, newColor, x, y));
+    fill(prevColor, newColor, x - 1, y);
+    fill(prevColor, newColor, x + 1, y);
+    fill(prevColor, newColor, x, y - 1);
+    fill(prevColor, newColor, x, y + 1);
+}
 
 Sketchpad::Sketchpad(Application* app, unsigned int top, unsigned int left, unsigned int width, unsigned int height, Charpad* charpad, Palettepad* palettepad)
     : Panel(app, top, left, width, height), charpad{charpad}, palettepad{palettepad} {
@@ -31,6 +53,32 @@ void Sketchpad::drawPoint() {
 void Sketchpad::drawPoint(Cpixel info, int x, int y) {
     if (x != -1 && y != -1) {
         cpixels[y][x] = info;
+    }
+}
+
+void Sketchpad::fillArea() {
+    if (cursorX != -1 && cursorY != -1) {
+        app->executeCommand(new BrushDownCommand(app, this));
+        Color foreColor = palettepad->getForeColor();
+        Color backColor = palettepad->getBackColor();
+        fill(cpixels[cursorY][cursorX], 
+                {charpad->getSelected(), 
+                foreColor.r, 
+                foreColor.g, 
+                foreColor.b, 
+                foreColor.a, 
+                backColor.r, 
+                backColor.g, 
+                backColor.b, 
+                backColor.a}, 
+                cursorX, cursorY);
+        app->executeCommand(new BrushUpCommand(app, this));
+    }
+}
+
+void Sketchpad::fillArea(Cpixel info, int x, int y) {
+    if (x != -1 && y != -1) {
+        fill(info, cpixels[cursorY][cursorX], x, y);
     }
 }
 
