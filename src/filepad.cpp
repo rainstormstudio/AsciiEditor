@@ -3,9 +3,9 @@
 
 Filepad::Filepad(Application* app, unsigned int top, unsigned int left, unsigned int width, unsigned int height)
     : Panel(app, top, left, width, height) {
-    newButton = new Button(app, top + 1, left + 2, 6, 1, "NEW");
-    saveButton = new Button(app, top + 2, left + 2, 6, 1, "SAVE");
-    loadButton = new Button(app, top + 3, left + 2, 6, 1, "LOAD");
+    newButton = new Button(app, top + 1, left + 1, 6, 1, "NEW");
+    saveButton = new Button(app, top + 2, left + 1, 6, 1, "SAVE");
+    loadButton = new Button(app, top + 3, left + 1, 6, 1, "LOAD");
 }
 
 Filepad::~Filepad() {

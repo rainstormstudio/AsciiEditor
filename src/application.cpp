@@ -16,9 +16,9 @@ Application::Application() {
     palettepad = new Palettepad(this, 27, 0, 20, 20);
     sketchpad = new Sketchpad(this, 0, 20, 60, 60, charpad, palettepad);
     statuspad = new Statuspad(this, 0, 0, 20, 7, sketchpad);
-    editpad = new Editpad(this, 47, 0, 10, 4);
-    filepad = new Filepad(this, 51, 0, 10, 5);
-    toolpad = new Toolpad(this, 47, 10, 10, 5);
+    editpad = new Editpad(this, 47, 0, 8, 4);
+    filepad = new Filepad(this, 51, 0, 8, 5);
+    toolpad = new Toolpad(this, 47, 8, 12, 8);
 
     running = true;
 }

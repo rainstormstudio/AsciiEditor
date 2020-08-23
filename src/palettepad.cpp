@@ -53,9 +53,9 @@ void Palettepad::render() {
     for (unsigned int i = 0; i < 18; ++i) {
         for (unsigned int j = 0; j < 18; ++j) {
             gfx->setBackColor(palette[i][j].r, palette[i][j].g, palette[i][j].b, palette[i][j].a, j + left + 1, i + top + 1);
-            int r = palette[i][j].r > 128 ? 0 : 255;
-            int g = palette[i][j].g > 128 ? 0 : 255;
-            int b = palette[i][j].b > 128 ? 0 : 255;
+            int r = palette[i][j].r * palette[i][j].a / 255 > 128 ? 0 : 255;
+            int g = palette[i][j].g * palette[i][j].a / 255 > 128 ? 0 : 255;
+            int b = palette[i][j].b * palette[i][j].a / 255 > 128 ? 0 : 255;
             int a = 255;
             gfx->setForeColor(r, g, b, a, j + left + 1, i + top + 1);
             if (i == selectedFore / 18 && j == selectedFore % 18
@@ -75,7 +75,7 @@ void Palettepad::render() {
             gfx->setCh('|', x, y - 1);
         }
         if (y + 2 < height + top) {
-            if (x - 1 > left + 1) {
+            if (x - 1 > left) {
                 gfx->setCh('/', x - 1, y + 1);
             }
             if (x + 2 < left + width) {
