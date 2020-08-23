@@ -3,13 +3,14 @@
 
 #include "command.hpp"
 #include <stack>
+#include <memory>
 
 class CommandHistory {
-    std::stack<Command*> commands;
+    std::stack<std::shared_ptr<Command>> commands;
 public:
     CommandHistory();
-    void push(Command* command);
-    Command* pop();
+    void push(std::shared_ptr<Command> command);
+    std::shared_ptr<Command> pop();
     int size() const;
 };
 

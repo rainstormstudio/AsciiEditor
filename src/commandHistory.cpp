@@ -1,18 +1,18 @@
 #include "commandHistory.hpp"
 
 CommandHistory::CommandHistory() {
-    commands = std::stack<Command*>();
+    commands = std::stack<std::shared_ptr<Command>>();
 }
 
-void CommandHistory::push(Command* command) {
+void CommandHistory::push(std::shared_ptr<Command> command) {
     commands.emplace(command);
 }
 
-Command* CommandHistory::pop() {
+std::shared_ptr<Command> CommandHistory::pop() {
     if (commands.empty()) {
         return nullptr;
     }
-    Command* command = commands.top();
+    std::shared_ptr<Command> command = commands.top();
     commands.pop();
     return command;
 }

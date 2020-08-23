@@ -14,5 +14,7 @@ int main(int argc, char* argv[]) {
         app->processInput();
     }
 
+    delete app;
+
     return 0;
 }

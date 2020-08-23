@@ -40,7 +40,7 @@ public:
     Graphics* getGFX() const;
     SDL_Event* getEvent() const;
 
-    void executeCommand(Command* command);
+    void executeCommand(std::shared_ptr<Command> command);
     void undo();
 };
 

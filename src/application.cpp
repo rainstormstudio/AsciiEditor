@@ -7,6 +7,7 @@
 #include "drawCommand.hpp"
 #include "drawPosCommand.hpp"
 #include "fillCommand.hpp"
+#include <memory>
 
 Application::Application() {
     gfx = new Graphics("AsciiEditor", "./assets/tilesets/Vintl01.png", 16, 16, 0, "./assets/fonts/Monaco.ttf", 1280, 960, 60, 80);
@@ -67,33 +68,34 @@ void Application::processInput() {
             if (event->button.button == SDL_BUTTON_LEFT) {
                 if (sketchpad->validPos()) {
                     if (toolpad->getSelected() == 0 || toolpad->getSelected() == 1) {
-                        executeCommand(new BrushDownCommand(this, sketchpad));
+                        executeCommand(std::make_shared<BrushDownCommand>(this, sketchpad));
                     } else if (toolpad->getSelected() == 2) {
-                        executeCommand(new FillCommand(this, sketchpad));
+                        executeCommand(std::make_shared<FillCommand>(this, sketchpad));
                     }
                 }
             }
         } else if (event->type == SDL_MOUSEBUTTONUP) {
             if (event->button.button == SDL_BUTTON_LEFT) {
                 if (sketchpad->validPos()) {
-                    executeCommand(new BrushUpCommand(this, sketchpad));
+                    executeCommand(std::make_shared<BrushUpCommand>(this, sketchpad));
                 }
             }
         } else if (event->type == SDL_KEYDOWN) {
             if (event->key.keysym.sym == SDLK_z && SDL_GetModState() & KMOD_CTRL) {
-                executeCommand(new UndoCommand(this, sketchpad));
+                executeCommand(std::make_shared<UndoCommand>(this, sketchpad));
             }
         }
     }
     if (sketchpad->validPos() && sketchpad->getBrush()) {
         if (toolpad->getSelected() == 0) {
-            executeCommand(new DrawCommand(this, sketchpad));
+            executeCommand(std::make_shared<DrawCommand>(this, sketchpad));
         } else if (toolpad->getSelected() == 1) {
-            executeCommand(new DrawPosCommand(this, sketchpad, {0, 0, 0, 0, 0, 0, 0, 0, 0}, sketchpad->getCursorX(), sketchpad->getCursorY()));
+            Cpixel blank = {0, 0, 0, 0, 0, 0, 0, 0, 0};
+            executeCommand(std::make_shared<DrawPosCommand>(this, sketchpad, blank, sketchpad->getCursorX(), sketchpad->getCursorY()));
         }
     }
     if (editpad->undo()) {
-        executeCommand(new UndoCommand(this, sketchpad));
+        executeCommand(std::make_shared<UndoCommand>(this, sketchpad));
     }
 }
 
@@ -101,15 +103,15 @@ Graphics* Application::getGFX() const { return gfx; }
 
 SDL_Event* Application::getEvent() const { return event; }
 
-void Application::executeCommand(Command* command) {
+void Application::executeCommand(std::shared_ptr<Command> command) {
     if (command->execute()) {
         history->push(command);
     }
 }
 
 void Application::undo() {
-    Command* command = history->pop();
-    while (command && !dynamic_cast<BrushDownCommand*>(command)) {
+    std::shared_ptr<Command> command = history->pop();
+    while (command && !std::dynamic_pointer_cast<BrushDownCommand>(command)) {
         command->undo();
         command = history->pop();
     }

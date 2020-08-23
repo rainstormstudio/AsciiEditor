@@ -15,7 +15,7 @@ void Sketchpad::fill(Cpixel prevColor, Cpixel newColor, int x, int y) {
     if (cpixels[y][x] == newColor) {
         return;
     }
-    app->executeCommand(new DrawPosCommand(app, this, newColor, x, y));
+    app->executeCommand(std::make_shared<DrawPosCommand>(app, this, newColor, x, y));
     fill(prevColor, newColor, x - 1, y);
     fill(prevColor, newColor, x + 1, y);
     fill(prevColor, newColor, x, y - 1);
@@ -58,7 +58,7 @@ void Sketchpad::drawPoint(Cpixel info, int x, int y) {
 
 void Sketchpad::fillArea() {
     if (cursorX != -1 && cursorY != -1) {
-        app->executeCommand(new BrushDownCommand(app, this));
+        app->executeCommand(std::make_shared<BrushDownCommand>(app, this));
         Color foreColor = palettepad->getForeColor();
         Color backColor = palettepad->getBackColor();
         fill(cpixels[cursorY][cursorX], 
@@ -72,7 +72,7 @@ void Sketchpad::fillArea() {
                 backColor.b, 
                 backColor.a}, 
                 cursorX, cursorY);
-        app->executeCommand(new BrushUpCommand(app, this));
+        app->executeCommand(std::make_shared<BrushUpCommand>(app, this));
     }
 }
 
