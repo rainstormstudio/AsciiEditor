@@ -34,6 +34,15 @@ Sketchpad::Sketchpad(Application* app, unsigned int top, unsigned int left, unsi
     brushDown = false;
 }
 
+void Sketchpad::clear() {
+    for (unsigned int i = 0; i < height; ++i) {
+        for (unsigned int j = 0; j < width; ++j) {
+            cpixels[i][j] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
+        }
+    }
+    brushDown = false;
+}
+
 void Sketchpad::drawPoint() {
     if (cursorX != -1 && cursorY != -1) {
         Color foreColor = palettepad->getForeColor();

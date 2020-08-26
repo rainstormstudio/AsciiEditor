@@ -33,6 +33,7 @@ class Sketchpad : public Panel {
 
 public:
     Sketchpad(Application* app, unsigned int top, unsigned int left, unsigned int width, unsigned int height, Charpad* charpad, Palettepad* palettepad);
+    void clear();
     void drawPoint();
     void drawPoint(Cpixel info, int x, int y);
     void fillArea();
