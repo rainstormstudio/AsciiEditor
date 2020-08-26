@@ -139,6 +139,7 @@ void Sketchpad::saveToFile(std::string filename) {
             }
             outfile << std::endl;
         }
+        outfile.close();
     } else {
         std::cerr << "Error saving file to " << filename << std::endl;
     }
@@ -179,6 +180,7 @@ void Sketchpad::loadFromFile(std::string filename) {
             }
             ++row;
         }
+        infile.close();
     } else {
         std::cerr << "Unable to open " << filename << std::endl;
     }
