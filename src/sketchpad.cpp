@@ -145,7 +145,43 @@ void Sketchpad::saveToFile(std::string filename) {
 }
 
 void Sketchpad::loadFromFile(std::string filename) {
-    //TODO: implement loadFromFile
+    if (filename == "") {
+        return;
+    }
+    std::ifstream infile{filename};
+    if (infile.is_open()) {
+        clear();
+        std::string line;
+        int row = 0;
+        while (std::getline(infile, line)) {
+            int len = line.length();
+            int col = 0;
+            int index = 0;
+            Uint8 info[9];
+            std::string token;
+            for (int i = 0; i < len; ++i) {
+                if (line[i] == '(') {
+                    index = 0;
+                    token = "";
+                } else if (line[i] == ')') {
+                    info[index] = static_cast<Uint8>(std::stoi(token));
+                    cpixels[row][col] = {info[0], info[1], info[2], info[3], info[4], info[5], info[6], info[7], info[8]};
+                    ++col;
+                } else if (line[i] == ',') {
+                    info[index] = static_cast<Uint8>(std::stoi(token));
+                    token = "";
+                    ++index;
+                } else if (line[i] >= '0' && line[i] <= '9') {
+                    token += line[i];
+                } else {
+                    std::cerr << "Error reading save file." << std::endl;
+                }
+            }
+            ++row;
+        }
+    } else {
+        std::cerr << "Unable to open " << filename << std::endl;
+    }
 }
 
 void Sketchpad::setBrush(bool down) {

@@ -9,6 +9,7 @@
 #include "fillCommand.hpp"
 #include "newFileCommand.hpp"
 #include "saveFileCommand.hpp"
+#include "loadFileCommand.hpp"
 #include <memory>
 
 Application::Application() {
@@ -87,6 +88,8 @@ void Application::processInput() {
                 executeCommand(std::make_shared<UndoCommand>(this, sketchpad));
             } else if (event->key.keysym.sym == SDLK_n && SDL_GetModState() & KMOD_CTRL) {
                 executeCommand(std::make_shared<NewFileCommand>(this, sketchpad));
+            } else if (event->key.keysym.sym == SDLK_s && SDL_GetModState() & KMOD_CTRL) {
+                executeCommand(std::make_shared<SaveFileCommand>(this, sketchpad));
             }
         }
     }
@@ -106,6 +109,9 @@ void Application::processInput() {
     }
     if (filepad->saveClicked()) {
         executeCommand(std::make_shared<SaveFileCommand>(this, sketchpad));
+    }
+    if (filepad->loadClicked()) {
+        executeCommand(std::make_shared<LoadFileCommand>(this, sketchpad));
     }
 }
 
