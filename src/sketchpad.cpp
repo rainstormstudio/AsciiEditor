@@ -119,20 +119,23 @@ void Sketchpad::render() {
 }
 
 void Sketchpad::saveToFile(std::string filename) {
+    if (filename == "") {
+        return;
+    }
     std::ofstream outfile{filename};
     if (outfile.is_open()) {
         for (unsigned int i = 0; i < height; ++i) {
             for (unsigned int j = 0; j < width; ++j) {
                 outfile << "("
-                        << cpixels[i][j].ch << ","
-                        << cpixels[i][j].r << ","
-                        << cpixels[i][j].g << ","
-                        << cpixels[i][j].b << ","
-                        << cpixels[i][j].a << ","
-                        << cpixels[i][j].br << ","
-                        << cpixels[i][j].bg << ","
-                        << cpixels[i][j].bb << ","
-                        << cpixels[i][j].ba << ")";
+                        << std::to_string(cpixels[i][j].ch) << ","
+                        << std::to_string(cpixels[i][j].r) << ","
+                        << std::to_string(cpixels[i][j].g) << ","
+                        << std::to_string(cpixels[i][j].b) << ","
+                        << std::to_string(cpixels[i][j].a) << ","
+                        << std::to_string(cpixels[i][j].br) << ","
+                        << std::to_string(cpixels[i][j].bg) << ","
+                        << std::to_string(cpixels[i][j].bb) << ","
+                        << std::to_string(cpixels[i][j].ba) << ")";
             }
             outfile << std::endl;
         }

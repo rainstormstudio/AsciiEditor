@@ -8,6 +8,7 @@
 #include "drawPosCommand.hpp"
 #include "fillCommand.hpp"
 #include "newFileCommand.hpp"
+#include "saveFileCommand.hpp"
 #include <memory>
 
 Application::Application() {
@@ -102,6 +103,9 @@ void Application::processInput() {
     }
     if (filepad->newClicked()) {
         executeCommand(std::make_shared<NewFileCommand>(this, sketchpad));
+    }
+    if (filepad->saveClicked()) {
+        executeCommand(std::make_shared<SaveFileCommand>(this, sketchpad));
     }
 }
 
