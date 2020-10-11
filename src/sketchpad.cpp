@@ -107,12 +107,12 @@ void Sketchpad::render() {
     if (cursorX != -1 && cursorY != -1) {
         unsigned int x = cursorX + left;
         unsigned int y = cursorY + top;
-        int r = cpixels[cursorY][cursorX].r > 128 ? 0 : 255;
-        int g = cpixels[cursorY][cursorX].g > 128 ? 0 : 255;
-        int b = cpixels[cursorY][cursorX].b > 128 ? 0 : 255;
-        int br = cpixels[cursorY][cursorX].br > 128 ? 0 : 255;
-        int bg = cpixels[cursorY][cursorX].bg > 128 ? 0 : 255;
-        int bb = cpixels[cursorY][cursorX].bb > 128 ? 0 : 255;
+        int r = cpixels[cursorY][cursorX].r * cpixels[cursorY][cursorX].a / 255 > 128 ? 0 : 255;
+        int g = cpixels[cursorY][cursorX].g * cpixels[cursorY][cursorX].a / 255 > 128 ? 0 : 255;
+        int b = cpixels[cursorY][cursorX].b * cpixels[cursorY][cursorX].a / 255 > 128 ? 0 : 255;
+        int br = cpixels[cursorY][cursorX].br * cpixels[cursorY][cursorX].ba / 255 > 128 ? 0 : 255;
+        int bg = cpixels[cursorY][cursorX].bg * cpixels[cursorY][cursorX].ba / 255 > 128 ? 0 : 255;
+        int bb = cpixels[cursorY][cursorX].bb * cpixels[cursorY][cursorX].ba / 255 > 128 ? 0 : 255;
         gfx->setForeColor(r, g, b, 255, x, y);
         gfx->setBackColor(br, bg, bb, 255, x, y);
     }
